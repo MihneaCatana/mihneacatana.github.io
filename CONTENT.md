@@ -8,7 +8,7 @@ A few things are still placeholders or need your sign-off — they're all listed
 | What | Where | Notes |
 | --- | --- | --- |
 | **Domain** | `astro.config.mjs` → `SITE` | ✅ Set to `https://mihneacatana.github.io` (GitHub Pages user site — requires the repo to be named `mihneacatana.github.io`). |
-| **Portrait photo** | `public/images/portrait.jpg` | ✅ Real photo in place (800×800); declared `width`/`height` in index/about corrected to 1:1 so the photo renders undistorted. |
+| **Portrait photo** | `public/images/portrait.jpg` | ✅ Real photo in place (240×320); declared `width`/`height` in index/about corrected to 1:1 so the photo renders undistorted. |
 | **Project years** | `src/content/projects/*.md` | I inferred 2025/2024/2026 from your CV timeline — correct any that are off. |
 | **Live links** | project frontmatter | ✅ All three projects now link their repos (SMB Management Platform → `multi-tenants-scheduler-app`). |
 
