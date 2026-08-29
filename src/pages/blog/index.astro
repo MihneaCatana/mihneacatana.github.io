@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogRow from '../../components/BlogRow.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Blog — Mihnea Catana" description="Mihnea Catana's notes on AI engineering, agents, MCP, and shipping AI inside real companies.">
+  <section class="section container">
+    <h1 class="h-display h2 reveal page-title">
+      <span class="reveal-inner">The <em class="accent-word">blog.</em></span>
+    </h1>
+    <p class="lede fade-up" style="--d: 1">
+      Notes from building AI into real companies — what worked, what didn't, and what I'd do
+      differently.
+    </p>
+
+    <div class="post-list">
+      {posts.map((p, i) => <BlogRow post={p} index={i} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: 1.6rem;
+  }
+
+  .section :global(.lede) {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+</style>

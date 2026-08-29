@@ -1,0 +1,103 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fmtFullDate, readingTime } from '../../utils';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return posts.map((post, i) => ({
+    params: { id: post.id },
+    props: { post, next: posts[(i + 1) % posts.length] },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  next: CollectionEntry<'blog'> | undefined;
+}
+
+const { post, next } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const { Content } = await render(post);
+const minutes = readingTime(post.body ?? '');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'Mihnea Catana',
+    url: Astro.site?.toString(),
+  },
+  url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
+};
+---
+
+<BaseLayout title={`${title} — Mihnea Catana`} description={description} schema={schema}>
+  <article class="post container">
+    <header class="post-head">
+      <p class="label fade-up">
+        {fmtFullDate(pubDate)} · {minutes} min read{tags.length > 0 && ` · ${tags.join(' / ')}`}
+      </p>
+      <h1 class="h-display h2 reveal">
+        <span class="reveal-inner">{title}</span>
+      </h1>
+    </header>
+
+    <div class="prose prose--drop fade-up" style="--d: 2">
+      <Content />
+    </div>
+
+    {
+      next && (
+        <nav class="post-next hairline-top" aria-label="More posts">
+          <p class="label">Read next</p>
+          <a class="h-display h3 next-link" href={`/blog/${next.id}/`}>
+            {next.data.title} <span class="accent-word" aria-hidden="true">→</span>
+          </a>
+        </nav>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding-block: clamp(2.5rem, 7vh, 5rem) 0;
+  }
+
+  .post-head {
+    max-width: 22em;
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .post-head .label {
+    margin-bottom: 1.2rem;
+  }
+
+  .prose {
+    margin-inline: auto;
+  }
+
+  .post-next {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-block: clamp(2.2rem, 6vh, 3.5rem);
+    margin-top: clamp(3rem, 8vh, 5rem);
+  }
+
+  .next-link {
+    max-width: 20em;
+    transition: color 0.3s ease;
+  }
+
+  .next-link:hover {
+    color: var(--accent-deep);
+  }
+</style>

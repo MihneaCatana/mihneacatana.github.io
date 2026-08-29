@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Mihnea Catana" description="Page not found.">
+  <section class="section container nf">
+    <p class="label fade-up">Error — 404</p>
+    <h1 class="h-display nf-title reveal">
+      <span class="reveal-inner">Four-oh-<em class="accent-word">four.</em></span>
+    </h1>
+    <p class="lede fade-up" style="--d: 1">
+      This page doesn't exist — or I moved it somewhere for dramatic effect.
+    </p>
+    <div class="fade-up" style="--d: 2">
+      <a class="btn btn--solid magnetic" href="/">Back to the good parts</a>
+    </div>
+    <p class="label hint fade-up" style="--d: 3">( psst — type <code>hello</code> anywhere, something happens )</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.6rem;
+  }
+
+  .nf-title {
+    font-size: clamp(3.5rem, 13vw, 10rem);
+    line-height: 1;
+  }
+
+  .nf .btn {
+    align-self: flex-start;
+    margin-top: 0.6rem;
+  }
+
+  .hint {
+    margin-top: 1.2rem;
+  }
+
+  .hint code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  next: CollectionEntry<'projects'>;
+}
+
+const { project, next } = Astro.props;
+const { title, description, year, role, stack, link, repo, image } = project.data;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${title} — Mihnea Catana`} description={description}>
+  <article class="case container">
+    <a class="u-link back-link label-link" href="/work">← All work</a>
+
+    <header class="case-head">
+      <h1 class="h-display h2 reveal">
+        <span class="reveal-inner">{title}</span>
+      </h1>
+      <p class="lede fade-up" style="--d: 1">{description}</p>
+    </header>
+
+    <dl class="case-meta fade-up" style="--d: 2">
+      <div>
+        <dt class="label">Year</dt>
+        <dd>{year}</dd>
+      </div>
+      <div>
+        <dt class="label">Role</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt class="label">Stack</dt>
+        <dd>{stack.join(', ')}</dd>
+      </div>
+      <div>
+        <dt class="label">Links</dt>
+        <dd class="case-links">
+          {link && <a class="u-link" href={link} target="_blank" rel="noopener noreferrer">Live ↗</a>}
+          {repo && <a class="u-link" href={repo} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+          {!link && !repo && <span class="small">—</span>}
+        </dd>
+      </div>
+    </dl>
+
+    <img class="case-hero fade-up" style="--d: 3" src={image} alt={`${title} preview`} width="1200" height="750" />
+
+    <div class="prose prose--drop case-body fade-up" style="--d: 4">
+      <Content />
+    </div>
+
+    <nav class="case-next hairline-top" aria-label="More work">
+      <p class="label">Next project</p>
+      <a class="h-display h3 next-link" href={`/work/${next.id}/`}>
+        {next.data.title} <span class="accent-word" aria-hidden="true">→</span>
+      </a>
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .case {
+    padding-block: clamp(2.5rem, 7vh, 5rem) 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .label-link {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .case-head {
+    max-width: 20em;
+  }
+
+  .case-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 1.6rem 2rem;
+    border-block: 1px solid var(--line);
+    padding-block: 1.6rem;
+    margin-block: clamp(2.2rem, 6vh, 3.8rem);
+  }
+
+  .case-meta dd {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .case-links {
+    display: flex;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+  }
+
+  .case-hero {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
+  }
+
+  .case-body {
+    margin-inline: auto;
+  }
+
+  .case-next {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-block: clamp(2.2rem, 6vh, 3.5rem);
+    margin-top: clamp(3rem, 8vh, 5rem);
+  }
+
+  .next-link {
+    max-width: 18em;
+    transition: color 0.3s ease;
+  }
+
+  .next-link:hover {
+    color: var(--accent-deep);
+  }
+</style>

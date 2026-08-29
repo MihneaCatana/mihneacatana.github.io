@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Keep this page honest and fresh — update it when the facts change
+const lastUpdated = 'August 2026';
+---
+
+<BaseLayout title="Now — Mihnea Catana" description="What Mihnea is working on, learning, and reading right now.">
+  <section class="section container">
+    <p class="label fade-up">Last updated — {lastUpdated}</p>
+    <h1 class="h-display h2 reveal page-title">
+      <span class="reveal-inner">What I'm doing <em class="accent-word">now.</em></span>
+    </h1>
+
+    <div class="prose prose--drop fade-up" style="--d: 1">
+      <p>
+        This is a <a href="https://nownownow.com/">/now page</a>: a snapshot of what I'm up to, updated whenever
+        it changes enough to be worth reading.
+      </p>
+
+      <h2>Building</h2>
+      <p>
+        At Lenovo I'm deep in AI adoption — extending Atlassian tooling with AI skills, agents, hooks and MCP
+        servers, and pushing that tooling out to teams across the department. On my own time, I'm growing the
+        AI Agent Avatar Registry: a live registry where AI agents onboard themselves and show up as pixel
+        avatars on a real-time feed.
+      </p>
+
+      <h2>Learning</h2>
+      <p>
+        Everything agentic: MCP server design, how multiple agents behave when they share a system, and where
+        local models like Ollama can replace cloud calls without anyone noticing the difference.
+      </p>
+
+      <h2>Teaching</h2>
+      <p>
+        Frontend sessions for Lenovo's Summer School, mentoring, and interviewing — teaching is the fastest
+        way to find the gaps in my own understanding.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-top: 1.4rem;
+    margin-bottom: clamp(2.2rem, 6vh, 3.5rem);
+  }
+</style>

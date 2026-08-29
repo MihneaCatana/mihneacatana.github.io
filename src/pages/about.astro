@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const timeline = [
+  {
+    year: '2025',
+    text: 'Full Stack Developer at Lenovo — technical owner of eight services in a 30+ microservices ecosystem, and the one driving AI adoption across the department. Backup Team Lead & Scrum Master.',
+  },
+  {
+    year: '2024',
+    text: 'Application Developer at IBM — trained and integrated AI assistants into application workflows (+30% process efficiency), Kafka messaging, Spring Boot microservices.',
+  },
+  {
+    year: '2023',
+    text: 'Software Engineer Intern at Adobe — Customer Journey Analytics, React + TypeScript component library, Jest & Playwright in CI.',
+  },
+  {
+    year: 'M.Sc.',
+    text: 'E-Business, Academy of Economic Studies Bucharest. Thesis: IoT Management Application.',
+  },
+  {
+    year: 'B.Sc.',
+    text: 'Economic Informatics, Academy of Economic Studies Bucharest. Thesis: management application for an IT company.',
+  },
+];
+
+const certs = [
+  'Anthropic Claude 101',
+  'IBM watsonx Essentials',
+  'watsonx.ai Technical Sales — Intermediate',
+  'watsonx.ai Technical Sales — Advanced',
+];
+---
+
+<BaseLayout title="About — Mihnea Catana" description="Full-stack developer at Lenovo, weaving AI agents and LLM tooling into enterprise software. Adobe, IBM and ASE Bucharest alumnus.">
+  <section class="section container">
+    <h1 class="h-display h2 reveal page-title">
+      <span class="reveal-inner">About <em class="accent-word">me.</em></span>
+    </h1>
+
+    <div class="about-grid">
+      <img
+        class="portrait fade-up"
+        src="/images/portrait.svg"
+        alt="Portrait placeholder — a real photo of Mihnea goes here"
+        width="800"
+        height="1000"
+      />
+
+      <div class="prose prose--drop fade-up" style="--d: 1">
+        <p>
+          I'm Mihnea Catana, a full-stack developer in Bucharest working at Lenovo on software that manages
+          thousands of devices — and, increasingly, on the AI layer that makes the humans around it faster.
+          My path here ran through Adobe's analytics platform and IBM's watsonx world, which is a long way of
+          saying I've seen both how big software breaks and how AI actually fits into it.
+        </p>
+        <p>
+          My favorite work is the kind that sounds boring and isn't: an Atlassian AI extension with skills,
+          agents, hooks and MCP servers that cut time lost across the department by 65%; vault-based credential
+          management; tracking down CPU spikes in Grafana until the logs went 90% quieter. I care about
+          outcomes I can measure.
+        </p>
+        <p>
+          Away from the keyboard I mentor colleagues, interview candidates, teach frontend at Lenovo's Summer
+          School, and hold two degrees from ASE Bucharest (Economic Informatics, then E-Business). I speak
+          Romanian natively, English at C1, and enough French to order confidently.
+        </p>
+
+        <h2>The story so far</h2>
+        <ul class="timeline">
+          {
+            timeline.map((t) => (
+              <li>
+                <span class="tl-year">{t.year}</span>
+                <span class="tl-text">{t.text}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2>Certifications</h2>
+        <ul class="certs">
+          {certs.map((c) => <li>{c}</li>)}
+        </ul>
+
+        <p>
+          The best way to reach me is <a href="mailto:mihneacatana@gmail.com">email</a> — I read everything,
+          even when I'm slow about it.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: clamp(2.2rem, 6vh, 3.8rem);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .portrait {
+    width: 100%;
+    border-radius: 6px;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1.2rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tl-year {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    padding-top: 0.2em;
+  }
+
+  .tl-text {
+    font-size: 0.98rem;
+  }
+
+  .certs {
+    columns: 2;
+    column-gap: 2.5rem;
+    padding-left: 1.1em;
+  }
+
+  .certs li {
+    break-inside: avoid;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 720px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .portrait {
+      max-width: 280px;
+      position: static;
+    }
+
+    .certs {
+      columns: 1;
+    }
+  }
+</style>

@@ -1,0 +1,252 @@
+---
+import '@fontsource/questrial/400.css';
+import '@fontsource/sacramento/400.css';
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = 'Mihnea Catana — Full-stack developer & AI engineer',
+  description = 'Mihnea Catana is a full-stack developer at Lenovo in Bucharest, weaving AI agents, MCP servers and LLM tooling into real enterprise software. Selected work, writing, and notes.',
+  schema,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Mihnea Catana" href={new URL('rss.xml', Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
+
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('og.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <Nav />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <div class="float-preview" aria-hidden="true">
+      <img src="" alt="" />
+    </div>
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <script data-astro-rerun>
+      // NOTE: data-astro-rerun makes Astro emit this script raw, so it must stay
+      // plain JavaScript. The IIFE is load-bearing: after each view transition
+      // this script re-executes in the SAME global scope, and top-level
+      // const/let would throw "already declared", killing the whole script
+      // and leaving every animated element invisible.
+      (() => {
+      const w = window;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ============================================================
+         Session-level setup — runs once, survives view transitions.
+         Everything here must query the live DOM at event time,
+         never capture elements that a page swap will replace.
+         ============================================================ */
+      if (!w.__mcInit) {
+        w.__mcInit = true;
+
+        let toastTimer;
+        w.__mcToast = (msg) => {
+          const toast = document.querySelector('.toast');
+          if (!toast) return;
+          toast.textContent = msg;
+          toast.classList.add('is-on');
+          window.clearTimeout(toastTimer);
+          toastTimer = window.setTimeout(() => toast.classList.remove('is-on'), 2800);
+        };
+
+        /* easter egg: type "hello" anywhere */
+        const messages = [
+          '$ hello → hi. you found the easter egg. ten points.',
+          '$ hello again → still here. the coffee is virtual.',
+          '$ hello × 3 → ok, you clearly type fast. we should work together.',
+        ];
+        let msgIdx = 0;
+        const EGG = 'hello';
+        let buffer = '';
+        window.addEventListener('keydown', (ev) => {
+          if (ev.key.length !== 1 || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+          const t = document.activeElement;
+          if (
+            t &&
+            (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)
+          ) {
+            return;
+          }
+          buffer = (buffer + ev.key.toLowerCase()).slice(-EGG.length);
+          if (buffer === EGG) {
+            w.__mcToast(messages[msgIdx] ?? messages[0]);
+            msgIdx = (msgIdx + 1) % messages.length;
+          }
+        });
+
+        /* footer local time */
+        const tick = () => {
+          const now = new Date().toTimeString().slice(0, 5);
+          document.querySelectorAll('[data-clock]').forEach((el) => {
+            el.textContent = now;
+          });
+        };
+        tick();
+        window.setInterval(tick, 30_000);
+
+        /* copy-email buttons — delegated, so swapped-in buttons just work */
+        document.addEventListener('click', (ev) => {
+          const el = ev.target instanceof Element ? ev.target.closest('[data-copy]') : null;
+          if (!el) return;
+          const value = el.getAttribute('data-copy');
+          if (!value) return;
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(value).then(
+              () => w.__mcToast?.(`email copied — ${value}`),
+              () => w.__mcToast?.('copy failed — the address is in the mailto link instead')
+            );
+          } else {
+            w.__mcToast?.(`email — ${value}`);
+          }
+        });
+      }
+
+      /* ============================================================
+         Page-level setup — re-runs after every view transition.
+         ============================================================ */
+
+      /* entrance reveals (masked headlines + fade-ups) */
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add(
+              entry.target.classList.contains('reveal') ? 'is-in' : 'is-visible'
+            );
+            io.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+      );
+      document.querySelectorAll('.reveal, .fade-up').forEach((el) => io.observe(el));
+
+      /* magnetic elements */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced) {
+      document.querySelectorAll('.magnetic').forEach((el) => {
+          el.style.transition = 'transform 0.18s ease-out';
+          el.addEventListener('mousemove', (ev) => {
+            const r = el.getBoundingClientRect();
+            const dx = ev.clientX - (r.left + r.width / 2);
+            const dy = ev.clientY - (r.top + r.height / 2);
+            el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.22}px)`;
+          });
+          el.addEventListener('mouseleave', () => {
+            el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            el.style.transform = '';
+            window.setTimeout(() => {
+              el.style.transition = 'transform 0.18s ease-out';
+            }, 500);
+          });
+        });
+      }
+
+      /* floating project preview that trails the cursor */
+      const preview = document.querySelector('.float-preview');
+      const previewImg = preview?.querySelector('img') ?? null;
+      const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      if (preview && previewImg && fineHover && !reduced) {
+        let tx = 0;
+        let ty = 0;
+        let cx = 0;
+        let cy = 0;
+        let raf = null;
+
+        const loop = () => {
+          cx += (tx - cx) * 0.12;
+          cy += (ty - cy) * 0.12;
+          // tilt comes from lag: the faster the cursor moves, the more it leans
+          const tilt = Math.max(-9, Math.min(9, (tx - cx) * 0.05));
+          preview.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -60%) rotate(${tilt}deg)`;
+          raf = requestAnimationFrame(loop);
+        };
+
+        const start = () => {
+          if (raf === null) raf = requestAnimationFrame(loop);
+        };
+        const stop = () => {
+          if (raf !== null) cancelAnimationFrame(raf);
+          raf = null;
+        };
+
+        document.querySelectorAll('.work-row').forEach((row) => {
+          row.addEventListener('mouseenter', () => {
+            const src = row.dataset.preview;
+            if (!src) return;
+            previewImg.src = src;
+            preview.style.opacity = '1';
+            start();
+          });
+          row.addEventListener('mouseleave', () => {
+            preview.style.opacity = '0';
+            window.setTimeout(stop, 350);
+          });
+        });
+
+        document.querySelectorAll('.work-list').forEach((list) => {
+          list.addEventListener('mousemove', (ev) => {
+            tx = ev.clientX;
+            ty = ev.clientY;
+            if (cx === 0 && cy === 0) {
+              cx = tx;
+              cy = ty;
+            }
+          });
+        });
+      }
+
+      /* set clock immediately on fresh elements (interval lives at session level) */
+      {
+        const now = new Date().toTimeString().slice(0, 5);
+        document.querySelectorAll('[data-clock]').forEach((el) => {
+          el.textContent = now;
+        });
+      }
+      })();
+    </script>
+  </body>
+</html>

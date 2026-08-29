@@ -1,0 +1,117 @@
+---
+/*
+  Renders the social-share card as a real page with the actual web fonts.
+  Screenshot it at exactly 1200x630 → public/og.png. Not linked anywhere;
+  exclude from sitemaps manually if it ever bothers you.
+*/
+import '@fontsource/questrial/400.css';
+import '@fontsource/sacramento/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>og-image</title>
+  </head>
+  <body>
+    <div class="card">
+      <header class="card-top">
+        <span class="sign">Catana</span>
+        <span class="label">FULL-STACK · AI ENGINEER</span>
+      </header>
+
+      <h1 class="headline">
+        I build value,<br />
+        not just <span class="accent">software.</span>
+      </h1>
+
+      <footer class="card-bottom">
+        <span class="label">SELECTED WORK — WRITING — NOTES</span>
+        <span class="label accent-label">/WORK</span>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  :global(html,
+  body) {
+    margin: 0;
+    padding: 0;
+    background: #f1f3ef;
+  }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  .card {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    background: #f1f3ef;
+    border: 1px solid transparent;
+  }
+
+  /* hairline frame, inset like the rest of the system */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 36px;
+    border: 1px solid rgba(21, 32, 26, 0.16);
+    pointer-events: none;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 52px 72px 0;
+  }
+
+  .sign {
+    font-family: 'Sacramento', 'Segoe Script', cursive;
+    font-size: 58px;
+    line-height: 1;
+    color: #14513b;
+  }
+
+  .headline {
+    margin: 96px 0 0;
+    padding: 0 72px;
+    font-family: 'Questrial', 'Century Gothic', sans-serif;
+    font-weight: 400;
+    font-size: 104px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #15201a;
+  }
+
+  .accent {
+    color: #14513b;
+  }
+
+  .card-bottom {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    bottom: 58px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .label {
+    font-family: 'IBM Plex Mono', Consolas, monospace;
+    font-size: 19px;
+    letter-spacing: 4px;
+    color: #5f6b62;
+  }
+
+  .accent-label {
+    color: #14513b;
+  }
+</style>

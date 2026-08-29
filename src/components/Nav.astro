@@ -1,0 +1,99 @@
+---
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+const links = [
+  { href: '/work', label: 'Work' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'About' },
+  { href: '/now', label: 'Now' },
+];
+
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="nav-logo" href="/" aria-label="Mihnea Catana — home">
+      <span class="signature">Catana</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        {
+          links.map((l) => (
+            <li>
+              <a class={`u-link nav-link ${isActive(l.href) ? 'is-active' : ''}`} href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    padding-block: 1.5rem 1.3rem;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-logo {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .signature {
+    font-family: var(--font-sign);
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 0;
+    transition: color 0.3s ease;
+  }
+
+  .nav-logo:hover .signature {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.9rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  @media (max-width: 640px) {
+    .signature {
+      font-size: 1.7rem;
+    }
+
+    .nav-links {
+      gap: 1.15rem;
+    }
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .nav-link:hover,
+  .nav-link.is-active {
+    color: var(--ink);
+  }
+
+  .nav-link.is-active {
+    background-size: 100% 1px;
+  }
+</style>

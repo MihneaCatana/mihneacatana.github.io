@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Colophon — Mihnea Catana" description="How this site is made: typography, colors, and code.">
+  <section class="section container">
+    <h1 class="h-display h2 reveal page-title">
+      <span class="reveal-inner">Colophon<em class="accent-word">.</em></span>
+    </h1>
+
+    <div class="prose prose--drop fade-up" style="--d: 1">
+      <p>A colophon is a site telling you how it was made. This one believes in showing its work.</p>
+
+      <h2>Typography</h2>
+      <p>
+        Headlines are set in <a href="https://github.com/joeprins/questrial" target="_blank" rel="noopener noreferrer">Questrial</a>,
+        body text in <a href="https://github.com/Instrument/instrument" target="_blank" rel="noopener noreferrer">Instrument Sans</a>, and
+        the small caps labels in <a href="https://www.ibm.com/plex/" target="_blank" rel="noopener noreferrer">IBM Plex Mono</a>. All fonts are
+        self-hosted — no requests leave this site for a font file.
+      </p>
+
+      <h2>Colors</h2>
+      <p>
+        Sage paper <code>#F1F3EF</code>, green-black ink <code>#15201A</code>, and one deep viridian accent
+        <code>#14513B</code> that has to earn its place. If a page needs more than one accent color, the
+        design was wrong.
+      </p>
+
+      <h2>Under the hood</h2>
+      <p>
+        Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>, which ships
+        this page as static HTML with a small sprinkle of vanilla JavaScript for the motion. No client-side
+        framework, no trackers, no analytics — I have no idea how many people read this, and I've made peace
+        with it.
+      </p>
+
+      <h2>Motion</h2>
+      <p>
+        Every animation respects <code>prefers-reduced-motion</code>. If your OS asks for less motion, you'll
+        get a perfectly still site that reads exactly the same.
+      </p>
+
+      <h2>One more thing</h2>
+      <p>
+        If you type <code>hello</code> anywhere on this site, something small says hi back. It does nothing
+        useful, which is precisely the point.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: clamp(2.2rem, 6vh, 3.5rem);
+  }
+</style>

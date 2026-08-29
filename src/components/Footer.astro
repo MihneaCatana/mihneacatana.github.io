@@ -1,0 +1,124 @@
+---
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/MihneaCatana' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mihnea-catan%C4%83/' },
+];
+
+const email = 'mihneacatana@gmail.com';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer hairline-top">
+  <div class="container">
+    <p class="label">Get in touch</p>
+    <a class="giant-link magnetic" href={`mailto:${email}`}>
+      Let's <em>talk.</em>
+    </a>
+    <button class="copy-email" type="button" data-copy={email} title="Copy email address">
+      Copy email
+    </button>
+
+    <ul class="socials">
+      {
+        socials.map((s) => (
+          <li>
+            <a class="u-link" href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a class="u-link" href="/rss.xml">
+          RSS <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="foot-bar label">
+      <span>© {year} Mihnea Catana</span>
+      <a class="u-link" href="/colophon">Colophon</a>
+      <a class="u-link" href="/now">/now</a>
+      <span>
+        Local time <span data-clock>--:--</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: clamp(3.5rem, 9vh, 6.5rem) 2rem;
+    margin-top: var(--section-pad);
+  }
+
+  .giant-link {
+    margin-top: 1.2rem;
+  }
+
+  .copy-email {
+    display: inline-block;
+    margin-top: 1.4rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    padding: 0 0 3px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .copy-email:hover {
+    color: var(--accent-deep);
+    border-color: var(--accent-deep);
+  }
+
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .socials a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .socials a:hover {
+    color: var(--ink);
+  }
+
+  .foot-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    padding-top: 1.4rem;
+  }
+
+  .foot-bar a {
+    color: var(--ink-soft);
+  }
+
+  .foot-bar a:hover {
+    color: var(--ink);
+  }
+
+  .foot-bar > :last-child {
+    margin-left: auto;
+  }
+</style>

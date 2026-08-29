@@ -1,0 +1,96 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { fmtMonthYear } from '../utils';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  index: number;
+}
+
+const { post, index } = Astro.props;
+const { title, description, pubDate } = post.data;
+---
+
+<a class="post-row fade-up" href={`/blog/${post.id}/`} style={`--d:${(index % 3) + 1}`}>
+  <span class="date">{fmtMonthYear(pubDate)}</span>
+  <span class="post-main">
+    <span class="post-title">{title}</span>
+    <span class="excerpt">{description}</span>
+  </span>
+  <span class="arrow" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .post-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr 2rem;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .post-list .post-row:first-child {
+    border-top: 1px solid var(--line);
+  }
+
+  .date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+  }
+
+  .post-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    transition: transform 0.45s var(--ease-out), color 0.3s ease;
+  }
+
+  .excerpt {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+
+  .arrow {
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .post-row:hover .post-title {
+      transform: translateX(8px);
+      color: var(--accent-deep);
+    }
+
+    .post-row:hover .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .post-row {
+      grid-template-columns: 1fr 1.5rem;
+    }
+
+    .date {
+      grid-column: 1 / -1;
+    }
+
+    .excerpt {
+      display: none;
+    }
+  }
+</style>

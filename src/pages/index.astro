@@ -1,0 +1,197 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import BlogRow from "../components/BlogRow.astro";
+
+const projects = (await getCollection("projects"))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const siteUrl = Astro.site?.toString() ?? "https://yourname.example.com/";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Mihnea Catana",
+    jobTitle: "Full-Stack Developer & AI Engineer",
+    email: "mailto:mihneacatana@gmail.com",
+    url: siteUrl,
+    sameAs: [
+      "https://github.com/MihneaCatana",
+      "https://www.linkedin.com/in/mihnea-catan%C4%83/",
+    ],
+    worksFor: { "@type": "Organization", name: "Lenovo" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Mihnea Catana",
+    url: siteUrl,
+  },
+];
+---
+
+<BaseLayout schema={schema}>
+  <!-- ================= HERO ================= -->
+  <section class="hero container">
+    <div class="hero-meta label fade-up">
+      <span>AI Full-stack developer — Remote</span>
+      <!-- <span class="hero-meta-right">AI · Agents · MCP</span> -->
+    </div>
+
+    <h1 class="h-display h1 hero-title">
+      <span class="reveal"
+        ><span class="reveal-inner" style="--d: 0">I build value,</span></span
+      >
+      <span class="reveal"
+        ><span class="reveal-inner" style="--d: 1"
+          >not just <em class="accent-word">software.</em></span
+        ></span
+      >
+    </h1>
+
+    <div class="hero-foot">
+      <p class="lede fade-up" style="--d: 2">
+        I'm <strong>Mihnea Catana</strong> — software developer, with experience at
+        multiple Fortune 500 companies, where I've helped ship valuable solutions
+        by integrating modern architecture principles, optimizing performance for
+        scalability, and introducing AI across multiple areas.
+      </p>
+      <div class="hero-cta fade-up" style="--d: 3">
+        <a class="btn btn--solid magnetic" href="/work">Selected work</a>
+        <a class="btn magnetic" href="/about">About me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SELECTED WORK ================= -->
+  <section class="section container" id="work">
+    <SectionHeader index="01" label="Selected work" />
+    <div class="work-list">
+      {projects.map((p, i) => <ProjectRow project={p} index={i} />)}
+    </div>
+    <p class="all-link fade-up">
+      <a class="u-link label-link" href="/work">All projects →</a>
+    </p>
+  </section>
+
+  <!-- ================= LATEST WRITING ================= -->
+  <section class="section container hairline-top">
+    <SectionHeader index="02" label="Latest writing" />
+    <div class="post-list">
+      {posts.map((p, i) => <BlogRow post={p} index={i} />)}
+    </div>
+    <p class="all-link fade-up">
+      <a class="u-link label-link" href="/blog">All posts →</a>
+    </p>
+  </section>
+
+  <!-- ================= ABOUT TEASER ================= -->
+  <section class="section container hairline-top">
+    <SectionHeader index="03" label="About" />
+    <div class="teaser fade-up">
+      <img
+        src="/images/portrait.svg"
+        alt="Portrait placeholder — replace with a real photo"
+        width="800"
+        height="1000"
+      />
+      <div class="teaser-copy">
+        <p class="lede">
+          From Adobe to IBM to Lenovo, I've spent my career turning AI from
+          demos into tools people rely on daily — and I care about results that
+          can be measured: 65% less time lost to repetitive workflows, 200%
+          better scalability, monitoring that finally stays quiet.
+        </p>
+        <a class="u-link label-link" href="/about">More about me →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 10vh, 7rem) clamp(3.5rem, 9vh, 6rem);
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .hero-title {
+    max-width: 14em;
+  }
+
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-top: clamp(2.5rem, 6vh, 4.5rem);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .all-link {
+    margin-top: 2.2rem;
+  }
+
+  .label-link {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .label-link:hover {
+    color: var(--ink);
+  }
+
+  .teaser {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .teaser img {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .teaser-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    max-width: 34em;
+  }
+
+  @media (max-width: 720px) {
+    .teaser {
+      grid-template-columns: 1fr;
+    }
+
+    .teaser img {
+      max-width: 320px;
+    }
+  }
+</style>

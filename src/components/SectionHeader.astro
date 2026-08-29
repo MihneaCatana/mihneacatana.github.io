@@ -1,0 +1,21 @@
+---
+interface Props {
+  index?: string;
+  label: string;
+}
+
+const { index, label } = Astro.props;
+---
+
+<div class="sec-head">
+  <p class="label">
+    {index && <span class="idx">({index})</span>} — {label}
+  </p>
+  <slot />
+</div>
+
+<style>
+  .sec-head {
+    margin-bottom: clamp(1.8rem, 4vh, 3rem);
+  }
+</style>
