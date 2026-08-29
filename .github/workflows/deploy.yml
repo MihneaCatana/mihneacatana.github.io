@@ -1,0 +1,50 @@
+# Deploys the Astro site to GitHub Pages on every push to main.
+# Live at: https://mihneacatana.github.io (repo must be named mihneacatana.github.io)
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow the job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; queued runs are skipped in favor of the latest
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Official Astro action: detects npm (package-lock.json), installs deps,
+      # runs `astro build`, and uploads ./dist as the Pages artifact
+      - name: Install, build, and upload site
+        uses: withastro/action@v6
+
+      # Enables Pages (with "GitHub Actions" as source) on the first run,
+      # so no manual Settings → Pages step is needed
+      - name: Enable GitHub Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

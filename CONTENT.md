@@ -7,7 +7,7 @@ A few things are still placeholders or need your sign-off — they're all listed
 
 | What | Where | Notes |
 | --- | --- | --- |
-| **Domain** | `astro.config.mjs` → `SITE` | Still `https://yourname.example.com`. Set it before deploying — it drives the sitemap, RSS and canonical URLs. |
+| **Domain** | `astro.config.mjs` → `SITE` | ✅ Set to `https://mihneacatana.github.io` (GitHub Pages user site — requires the repo to be named `mihneacatana.github.io`). |
 | **Portrait photo** | `public/images/portrait.svg` | Replace with a real photo (~800px wide, portrait orientation); update the `src` in `src/pages/index.astro` and `src/pages/about.astro` if the filename differs. |
 | **Project years** | `src/content/projects/*.md` | I inferred 2025/2024/2026 from your CV timeline — correct any that are off. |
 | **Live links** | project frontmatter | None of the three projects have `link:`/`repo:` set. If the Avatar Registry or IoT Manager are public (or can be), add them — a clickable demo is worth a lot. |
