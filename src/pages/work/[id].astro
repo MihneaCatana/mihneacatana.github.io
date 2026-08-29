@@ -89,7 +89,9 @@ const { Content } = await render(project);
   }
 
   .case-head {
-    max-width: 20em;
+    /* was 20em (~340px): narrower than long words like "Management" at h2 size,
+       which the reveal mask (overflow: hidden) then clipped mid-word */
+    max-width: 34em;
   }
 
   .case-meta {

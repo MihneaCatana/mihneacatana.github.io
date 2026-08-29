@@ -72,7 +72,9 @@ const schema = {
   }
 
   .post-head {
-    max-width: 22em;
+    /* was 22em (~374px): long words ("themselves", "enterprise") can exceed this
+       at h2 size and get clipped by the reveal mask — same bug as work/[id] */
+    max-width: 28em;
     margin-bottom: clamp(2.5rem, 6vh, 4rem);
   }
 
