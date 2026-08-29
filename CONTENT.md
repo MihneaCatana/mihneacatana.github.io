@@ -8,17 +8,14 @@ A few things are still placeholders or need your sign-off — they're all listed
 | What | Where | Notes |
 | --- | --- | --- |
 | **Domain** | `astro.config.mjs` → `SITE` | ✅ Set to `https://mihneacatana.github.io` (GitHub Pages user site — requires the repo to be named `mihneacatana.github.io`). |
-| **Portrait photo** | `public/images/portrait.svg` | Replace with a real photo (~800px wide, portrait orientation); update the `src` in `src/pages/index.astro` and `src/pages/about.astro` if the filename differs. |
+| **Portrait photo** | `public/images/portrait.jpg` | ✅ Real photo in place (800×800); declared `width`/`height` in index/about corrected to 1:1 so the photo renders undistorted. |
 | **Project years** | `src/content/projects/*.md` | I inferred 2025/2024/2026 from your CV timeline — correct any that are off. |
-| **Live links** | project frontmatter | None of the three projects have `link:`/`repo:` set. If the Avatar Registry or IoT Manager are public (or can be), add them — a clickable demo is worth a lot. |
+| **Live links** | project frontmatter | ✅ All three projects now link their repos (SMB Management Platform → `multi-tenants-scheduler-app`). |
 
 ## Needs your review (written from your CV, in a confident first-person voice)
 
-- **Blog posts** — `src/content/blog/*.md` — three drafts derived from your real work
-  (MCP plumbing, agent onboarding, AI adoption). Each starts with a `DRAFT` comment.
-  Read them, edit them into your own voice, adjust any claim you wouldn't say
-  out loud, then delete the comment. **Do not deploy with unreviewed posts** — the
-  whole point of the blog is legitimacy.
+- **Blog posts** — ✅ Published: the `DRAFT` comments were removed from all three posts
+  in `src/content/blog/` (MCP plumbing, agent onboarding, AI adoption).
 - **Hero line** — "I build full-stack software that thinks." in `src/pages/index.astro`.
   If it doesn't sound like you, it's one line to change.
 - **About page bio** — `src/pages/about.astro` — fact-checked against the CV, but it's

@@ -7,11 +7,6 @@ tags:
   - engineering-culture
 ---
 
-<!--
-  DRAFT — derived from your CV's AI adoption work at Lenovo. Review, edit in your
-  own voice, then delete this comment.
--->
-
 I help drive AI adoption for my department at Lenovo, which sounds like a role about models and prompts. In practice it's a role about Tuesday afternoons — the hours people lose to ticket triage, spec hunting, and writing the same status update in four places. The AI work only landed once I optimized for the afternoon, not for the AI.
 
 ## What didn't work

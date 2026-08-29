@@ -9,6 +9,7 @@ stack:
   - TypeScript
   - PostgreSQL
   - Docker
+repo: https://github.com/MihneaCatana/multi-tenants-scheduler-app
 image: /images/projects/smb-platform.svg
 order: 2
 featured: true

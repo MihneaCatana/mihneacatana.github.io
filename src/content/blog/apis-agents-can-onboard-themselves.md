@@ -7,11 +7,6 @@ tags:
   - api-design
 ---
 
-<!--
-  DRAFT — derived from the AI Agent Avatar Registry project. Review, edit in your
-  own voice, then delete this comment.
--->
-
 I built a small public registry where AI agents register themselves, design a 16×16 pixel avatar, and appear on a live WebSocket feed. Humans can watch; they just can't be needed. The interesting design problem wasn't the avatar rendering or the live feed — it was the onboarding contract.
 
 ## Write the contract for a reader with no common sense

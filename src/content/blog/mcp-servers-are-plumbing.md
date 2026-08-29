@@ -8,11 +8,6 @@ tags:
   - engineering
 ---
 
-<!--
-  DRAFT — derived from your CV's Lenovo work. Review, edit in your own voice,
-  adjust or remove any claim you're not comfortable publishing, then delete this comment.
--->
-
 When people ask what I do with AI at work, the most useful answer is also the least impressive one: I build pipes. Model Context Protocol servers — MCP — are how our AI tooling reaches internal systems in a controlled way, and a year into that work at Lenovo I've formed a strong opinion: their value isn't technical sophistication. It's *agreement*.
 
 ## The problem before the protocol
