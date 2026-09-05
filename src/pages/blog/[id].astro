@@ -39,6 +39,15 @@ const schema = {
 ---
 
 <BaseLayout title={`${title} — Mihnea Catana`} description={description} schema={schema}>
+<script is:inline define:vars={{ postTitle: title, postTags: tags, postMinutes: minutes }}>
+  document.addEventListener('astro:page-load', () => {
+    window.posthog?.capture('blog_post_viewed', {
+      post_title: postTitle,
+      tags: postTags,
+      reading_time_minutes: postMinutes
+    });
+  }, { once: true });
+</script>
   <article class="post container">
     <header class="post-head">
       <p class="label fade-up">
@@ -57,7 +66,8 @@ const schema = {
       next && (
         <nav class="post-next hairline-top" aria-label="More posts">
           <p class="label">Read next</p>
-          <a class="h-display h3 next-link" href={`/blog/${next.id}/`}>
+          <a class="h-display h3 next-link" href={`/blog/${next.id}/`}
+            onclick={`window.posthog?.capture('next_post_clicked', { from_post: '${title}', to_post: '${next.data.title}' })`}>
             {next.data.title} <span class="accent-word" aria-hidden="true">→</span>
           </a>
         </nav>

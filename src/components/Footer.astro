@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
 <footer class="footer hairline-top">
   <div class="container">
     <p class="label">Get in touch</p>
-    <a class="giant-link magnetic" href={`mailto:${email}`}>
+    <a class="giant-link magnetic" href={`mailto:${email}`} onclick="window.posthog?.capture('contact_email_clicked')">
       Let's <em>talk.</em>
     </a>
     <button class="copy-email" type="button" data-copy={email} title="Copy email address">
@@ -22,14 +22,15 @@ const year = new Date().getFullYear();
       {
         socials.map((s) => (
           <li>
-            <a class="u-link" href={s.href} target="_blank" rel="noopener noreferrer">
+            <a class="u-link" href={s.href} target="_blank" rel="noopener noreferrer"
+              onclick={`window.posthog?.capture('social_link_clicked', { platform: '${s.label}' })`}>
               {s.label} <span aria-hidden="true">↗</span>
             </a>
           </li>
         ))
       }
       <li>
-        <a class="u-link" href="/rss.xml">
+        <a class="u-link" href="/rss.xml" onclick="window.posthog?.capture('social_link_clicked', { platform: 'RSS' })">
           RSS <span aria-hidden="true">↗</span>
         </a>
       </li>

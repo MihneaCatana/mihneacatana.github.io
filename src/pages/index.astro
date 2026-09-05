@@ -66,8 +66,8 @@ const schema = [
         scalability, and introducing AI across multiple areas.
       </p>
       <div class="hero-cta fade-up" style="--d: 3">
-        <a class="btn btn--solid magnetic" href="/work">Selected work</a>
-        <a class="btn magnetic" href="/about">About me</a>
+        <a class="btn btn--solid magnetic" href="/work" onclick="window.posthog?.capture('cta_clicked', { label: 'Selected work', destination: '/work' })">Selected work</a>
+        <a class="btn magnetic" href="/about" onclick="window.posthog?.capture('cta_clicked', { label: 'About me', destination: '/about' })">About me</a>
       </div>
     </div>
   </section>

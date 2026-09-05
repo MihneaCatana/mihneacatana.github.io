@@ -11,6 +11,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import PostHog from '../components/posthog.astro';
 
 interface Props {
   title?: string;
@@ -39,6 +40,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="alternate" type="application/rss+xml" title="Mihnea Catana" href={new URL('rss.xml', Astro.site)} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
+    <PostHog />
 
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
@@ -114,6 +116,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           buffer = (buffer + ev.key.toLowerCase()).slice(-EGG.length);
           if (buffer === EGG) {
             w.__mcToast(messages[msgIdx] ?? messages[0]);
+            window.posthog?.capture('easter_egg_triggered', { attempt: msgIdx + 1 });
             msgIdx = (msgIdx + 1) % messages.length;
           }
         });
@@ -136,11 +139,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           if (!value) return;
           if (navigator.clipboard) {
             navigator.clipboard.writeText(value).then(
-              () => w.__mcToast?.(`email copied — ${value}`),
+              () => {
+                w.__mcToast?.(`email copied — ${value}`);
+                window.posthog?.capture('email_copied', { method: 'clipboard' });
+              },
               () => w.__mcToast?.('copy failed — the address is in the mailto link instead')
             );
           } else {
             w.__mcToast?.(`email — ${value}`);
+            window.posthog?.capture('email_copied', { method: 'fallback' });
           }
         });
       }

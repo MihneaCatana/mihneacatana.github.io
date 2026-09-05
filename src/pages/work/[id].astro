@@ -21,6 +21,15 @@ const { Content } = await render(project);
 ---
 
 <BaseLayout title={`${title} — Mihnea Catana`} description={description}>
+<script is:inline define:vars={{ projectTitle: title, projectYear: year, projectStack: stack }}>
+  document.addEventListener('astro:page-load', () => {
+    window.posthog?.capture('project_viewed', {
+      project_title: projectTitle,
+      year: projectYear,
+      stack: projectStack
+    });
+  }, { once: true });
+</script>
   <article class="case container">
     <a class="u-link back-link label-link" href="/work">← All work</a>
 
@@ -47,8 +56,8 @@ const { Content } = await render(project);
       <div>
         <dt class="label">Links</dt>
         <dd class="case-links">
-          {link && <a class="u-link" href={link} target="_blank" rel="noopener noreferrer">Live ↗</a>}
-          {repo && <a class="u-link" href={repo} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+          {link && <a class="u-link" href={link} target="_blank" rel="noopener noreferrer" onclick={`window.posthog?.capture('project_link_clicked', { project_title: '${title}', link_type: 'live' })`}>Live ↗</a>}
+          {repo && <a class="u-link" href={repo} target="_blank" rel="noopener noreferrer" onclick={`window.posthog?.capture('project_link_clicked', { project_title: '${title}', link_type: 'source' })`}>Source ↗</a>}
           {!link && !repo && <span class="small">—</span>}
         </dd>
       </div>
@@ -62,7 +71,8 @@ const { Content } = await render(project);
 
     <nav class="case-next hairline-top" aria-label="More work">
       <p class="label">Next project</p>
-      <a class="h-display h3 next-link" href={`/work/${next.id}/`}>
+      <a class="h-display h3 next-link" href={`/work/${next.id}/`}
+        onclick={`window.posthog?.capture('next_project_clicked', { from_project: '${title}', to_project: '${next.data.title}' })`}>
         {next.data.title} <span class="accent-word" aria-hidden="true">→</span>
       </a>
     </nav>
